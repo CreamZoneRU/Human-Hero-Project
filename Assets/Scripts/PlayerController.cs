@@ -4,11 +4,25 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public Rigidbody2D playerRb;
+    // Private Components
+    [SerializeField] Rigidbody2D playerRb;
 
+    // Public Components
+    public HealthBar healthBar;
+
+    // Private Variables
     [SerializeField] float playerSpeed = 7f;
 
+    // Public Variables
+    public int playerMaxHealth = 10;
+    public int playerCurrentHealth;
     Vector2 playerMovement;
+
+    void Start()
+    {
+        playerCurrentHealth = playerMaxHealth;
+        healthBar.SetMaxHealth(playerMaxHealth);
+    }
 
 
     // Update is called once per frame
@@ -17,11 +31,26 @@ public class PlayerController : MonoBehaviour
         // Captures the horizontal and vertical input
         playerMovement.x = Input.GetAxisRaw("Horizontal");
         playerMovement.y = Input.GetAxisRaw("Vertical");
+
+        // Taking Damage Testing
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            TakeDamage(1);
+        }
     }
 
     void FixedUpdate()
     {
         // Moves the character to the specified point by pressing the control buttons
         playerRb.MovePosition(playerRb.position + playerMovement * playerSpeed * Time.fixedDeltaTime);
+    }
+
+    // Dealing Damage System
+    void TakeDamage(int damage)
+    {
+        playerCurrentHealth -= damage;
+
+        // Updating HelthBar when player taking damage
+        healthBar.SetHealth(playerCurrentHealth);
     }
 }
