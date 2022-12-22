@@ -5,12 +5,12 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public int amountOfHeal;
-    private PlayerController player;
+    private Player player;
     private HealthBar healthBar;
 
     void Start()
     {
-        player = GameObject.Find("Player").GetComponent<PlayerController>();
+        player = GameObject.Find("Player").GetComponent<Player>();
         healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
     }
 
@@ -23,16 +23,16 @@ public class Item : MonoBehaviour
         }
     }
 
-    void HealPlayer(int amountOfHeal)
+    public void HealPlayer(int amountOfHeal)
     {    
         // if current hp > giving heal = heal normal
-        if ((player.playerMaxHealth - player.playerCurrentHealth) < amountOfHeal)
-            player.playerCurrentHealth = player.playerMaxHealth;
+        if ((player.playerStats.maxHealth - player.playerStats.currentHealth) < amountOfHeal)
+            player.playerStats.currentHealth = player.playerStats.maxHealth;
         // if needed hp < giving heal = heal to full health
-        else if (player.playerCurrentHealth < player.playerMaxHealth)
-            player.playerCurrentHealth += amountOfHeal;
+        else if (player.playerStats.currentHealth < player.playerStats.maxHealth)
+            player.playerStats.currentHealth += amountOfHeal;
 
         // Update health bar
-        healthBar.SetHealth(player.playerCurrentHealth);
+        healthBar.SetHealth(player.playerStats.currentHealth);
     }
 }
