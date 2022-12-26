@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
 
     public EnemyStats enemyStats = new EnemyStats();
 
-    public void DamageEnemy(int damage)
+    public virtual void DamageEnemy(int damage)
     {
         enemyStats.health -= damage;
         if(enemyStats.health <= 0) 

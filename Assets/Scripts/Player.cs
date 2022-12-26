@@ -44,6 +44,12 @@ public class Player : MonoBehaviour
         // Captures the horizontal and vertical input
         playerMovement.x = Input.GetAxisRaw("Horizontal");
         playerMovement.y = Input.GetAxisRaw("Vertical");
+
+        // Manual Restart
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            FindObjectOfType<GameManager>().Restart();
+        }
     }
 
     void FixedUpdate()
@@ -62,6 +68,7 @@ public class Player : MonoBehaviour
         if (playerStats.currentHealth <= 0)
         {
             GameManager.KillPlayer(this);
+            FindObjectOfType<GameManager>().EndGame();
         }
     }
 
